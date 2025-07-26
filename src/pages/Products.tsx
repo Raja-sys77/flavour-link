@@ -294,7 +294,24 @@ const Products = () => {
             <SelectValue placeholder="All categories" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All categories</SelectItem>
+            import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select"
+
+<Select onValueChange={(val) => setSelectedCategory(val)}>
+  <SelectTrigger className="w-[200px]">
+    <SelectValue placeholder="Select a category" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="juice">Juice</SelectItem>
+    <SelectItem value="snacks">Snacks</SelectItem>
+    <SelectItem value="chaat">Chaat</SelectItem>
+  </SelectContent>
+</Select>
             {categories.map((category) => (
               <SelectItem key={category} value={category}>
                 {category}

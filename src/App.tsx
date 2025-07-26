@@ -63,3 +63,7 @@ const App = () => (
 );
 
 export default App;
+
+import AddProduct from "./pages/AddProduct";
+
+<Route path="/add-product" element={<AddProduct />} />
