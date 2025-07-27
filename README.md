@@ -59,5 +59,5 @@ This project is built with:
 
 ## 🙌 Team
 
-- Team Vendora
+- Team Pingbot
 
