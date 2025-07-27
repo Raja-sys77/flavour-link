@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import LoadingSpinner from './LoadingSpinner';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Trash2, Plus, Minus, ShoppingCart } from 'lucide-react';
@@ -29,6 +30,12 @@ export const Cart = ({ cart, setCart }: CartProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [stockValidation, setStockValidation] = useState<{[key: string]: number}>({});
+
+  // Calculate totals
+  const subtotal = cart.reduce((sum, item) => sum + (item.price_per_kg * item.quantity), 0);
+  const tax = subtotal * 0.18; // 18% GST
+  const total = subtotal + tax;
 
   const updateQuantity = (productId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -57,10 +64,26 @@ export const Cart = ({ cart, setCart }: CartProps) => {
     setCart(cart.filter(item => item.id !== productId));
   };
 
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + (item.price_per_kg * item.quantity), 0);
-  };
 
+  // Validate stock availability
+  const validateStock = async () => {
+    const stockCheck: {[key: string]: number} = {};
+    
+    for (const item of cart) {
+      const { data, error } = await supabase
+        .from('products')
+        .select('stock_available')
+        .eq('id', item.id)
+        .single();
+        
+      if (!error && data) {
+        stockCheck[item.id] = data.stock_available;
+      }
+    }
+    
+    setStockValidation(stockCheck);
+    return stockCheck;
+  };
   const placeOrder = async () => {
     if (!user) {
       toast({
@@ -81,6 +104,22 @@ export const Cart = ({ cart, setCart }: CartProps) => {
     }
 
     setLoading(true);
+    
+    // Validate stock first
+    const stockCheck = await validateStock();
+    const hasStockIssues = cart.some(item => 
+      (stockCheck[item.id] || 0) < item.quantity
+    );
+    
+    if (hasStockIssues) {
+      toast({
+        title: "Stock Validation Failed",
+        description: "Some items don't have sufficient stock available",
+        variant: "destructive"
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       // Group cart items by supplier
@@ -129,7 +168,7 @@ export const Cart = ({ cart, setCart }: CartProps) => {
           const { error: stockError } = await supabase
             .from('products')
             .update({ 
-              stock_available: item.stock_available - item.quantity 
+              stock_available: (stockCheck[item.id] || 0) - item.quantity 
             })
             .eq('id', item.id);
 
@@ -255,9 +294,19 @@ export const Cart = ({ cart, setCart }: CartProps) => {
               <CardTitle>Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex justify-between text-lg font-semibold">
-                <span>Total:</span>
-                <span>₹{getTotalPrice().toFixed(2)}</span>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span>Subtotal:</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>GST (18%):</span>
+                  <span>₹{tax.toFixed(2)}</span>
+                </div>
+                <div className="border-t pt-2 flex justify-between font-bold text-lg">
+                  <span>Total:</span>
+                  <span>₹{total.toFixed(2)}</span>
+                </div>
               </div>
               
               <Button 

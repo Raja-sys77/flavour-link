@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Package, Clock, CheckCircle, Truck } from 'lucide-react';
+import { Eye, RefreshCw, Clock, CheckCircle, Truck } from 'lucide-react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface OrderItem {
   id: string;
@@ -137,7 +139,7 @@ const Orders = () => {
       case 'delivered':
         return <Truck className="h-4 w-4" />;
       default:
-        return <Package className="h-4 w-4" />;
+        return <Eye className="h-4 w-4" />;
     }
   };
 
@@ -154,8 +156,36 @@ const Orders = () => {
     }
   };
 
+  const handleReorder = async (orderId: string) => {
+    try {
+      const { data: orderItems, error } = await supabase
+        .from('order_items')
+        .select(`
+          *,
+          product:products(*)
+        `)
+        .eq('order_id', orderId);
+
+      if (error) throw error;
+
+      // Add items to cart (this would need to be passed from parent component)
+      // For now, show success message
+      toast({
+        title: "Reorder Feature",
+        description: "Reorder functionality would add these items to your cart",
+      });
+
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
   if (loading) {
-    return <div className="flex items-center justify-center h-64">Loading...</div>;
+    return <LoadingSpinner text="Loading orders..." />;
   }
 
   const isSupplier = profile?.role === 'supplier';
@@ -173,7 +203,7 @@ const Orders = () => {
 
       {orders.length === 0 ? (
         <div className="text-center py-12">
-          <Package className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+          <Eye className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
           <h2 className="text-xl font-semibold mb-2">No orders found</h2>
           <p className="text-muted-foreground">
             {isSupplier ? 'You have no incoming orders yet.' : 'You haven\'t placed any orders yet.'}

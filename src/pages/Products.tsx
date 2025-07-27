@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Search, ShoppingCart, Edit, Trash2, TrendingUp, TrendingDown } from 'lucide-react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface Product {
   id: string;
@@ -57,6 +58,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [sortBy, setSortBy] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -83,7 +85,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
 
   useEffect(() => {
     filterProducts();
-  }, [products, searchTerm, selectedCategory]);
+  }, [products, searchTerm, selectedCategory, sortBy]);
 
   const fetchData = async () => {
     try {
@@ -132,6 +134,13 @@ const Products = ({ cart, setCart }: ProductsProps) => {
 
     if (selectedCategory && selectedCategory !== 'all') {
       filtered = filtered.filter(product => product.category === selectedCategory);
+    }
+
+    // Apply sorting
+    if (sortBy === 'price-low') {
+      filtered = [...filtered].sort((a, b) => a.price_per_kg - b.price_per_kg);
+    } else if (sortBy === 'price-high') {
+      filtered = [...filtered].sort((a, b) => b.price_per_kg - a.price_per_kg);
     }
 
     setFilteredProducts(filtered);
@@ -296,7 +305,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64">Loading...</div>;
+    return <LoadingSpinner text="Loading products..." />;
   }
 
   const isSupplier = profile?.role === 'supplier';
@@ -495,7 +504,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center flex-wrap">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
@@ -517,6 +526,17 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                 {category}
               </SelectItem>
             ))}
+          </SelectContent>
+        </Select>
+
+        <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-48">
+            <SelectValue placeholder="Sort by price" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="default">Default</SelectItem>
+            <SelectItem value="price-low">Price: Low to High</SelectItem>
+            <SelectItem value="price-high">Price: High to Low</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -558,7 +578,19 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>Stock available:</span>
-                    <span className="font-medium">{product.stock_available} kg</span>
+                    <span className={`font-medium ${
+                      product.stock_available === 0 
+                        ? 'text-red-600' 
+                        : product.stock_available < 10 
+                        ? 'text-yellow-600' 
+                        : 'text-green-600'
+                    }`}>
+                      {product.stock_available === 0 
+                        ? 'Out of Stock' 
+                        : product.stock_available < 10 
+                        ? `Low Stock: ${product.stock_available} kg left` 
+                        : `In Stock: ${product.stock_available} kg`}
+                    </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Location:</span>
@@ -589,8 +621,9 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                 {!isSupplier && (
                   <Button 
                     onClick={() => addToCart(product)}
-                    className="w-full"
+                    className="w-full transition-all hover:scale-105"
                     disabled={product.stock_available === 0}
+                    variant={product.stock_available === 0 ? "secondary" : "default"}
                   >
                     <ShoppingCart className="h-4 w-4 mr-2" />
                     {product.stock_available === 0 ? 'Out of Stock' : 'Add to Cart'}
