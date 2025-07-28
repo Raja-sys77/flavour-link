@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
+import { useTranslation } from '@/hooks/useTranslation';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { LogOut, Package, User, LayoutDashboard, ShoppingCart, ClipboardList } from 'lucide-react';
 
 interface LayoutProps {
@@ -12,6 +14,7 @@ interface LayoutProps {
 
 const Layout = ({ children, cart }: LayoutProps) => {
   const { signOut } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -40,7 +43,7 @@ const Layout = ({ children, cart }: LayoutProps) => {
               }`}
             >
               <LayoutDashboard className="h-4 w-4" />
-              <span>Dashboard</span>
+              <span className="text-sm">{t('nav.dashboard')}</span>
             </Link>
             
             <Link 
@@ -52,7 +55,7 @@ const Layout = ({ children, cart }: LayoutProps) => {
               }`}
             >
               <Package className="h-4 w-4" />
-              <span>Products</span>
+              <span className="text-sm">{t('nav.products')}</span>
             </Link>
 
             <Link 
@@ -64,9 +67,9 @@ const Layout = ({ children, cart }: LayoutProps) => {
               }`}
             >
               <ShoppingCart className="h-4 w-4" />
-              <span>Cart</span>
+              <span className="text-sm">{t('nav.cart')}</span>
               {cartCount > 0 && (
-                <Badge variant="destructive" className="ml-1 h-5 min-w-5 text-xs flex items-center justify-center">
+                <Badge className="ml-1 h-5 min-w-5 text-xs flex items-center justify-center bg-destructive text-destructive-foreground">
                   {cartCount}
                 </Badge>
               )}
@@ -81,7 +84,7 @@ const Layout = ({ children, cart }: LayoutProps) => {
               }`}
             >
               <ClipboardList className="h-4 w-4" />
-              <span>Orders</span>
+              <span className="text-sm">{t('nav.orders')}</span>
             </Link>
             
             <Link 
@@ -93,19 +96,22 @@ const Layout = ({ children, cart }: LayoutProps) => {
               }`}
             >
               <User className="h-4 w-4" />
-              <span>Profile</span>
+              <span className="text-sm">{t('nav.profile')}</span>
             </Link>
           </nav>
           
-          <Button 
-            onClick={handleSignOut} 
-            variant="outline" 
-            size="sm"
-            className="flex items-center space-x-2"
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Logout</span>
-          </Button>
+          <div className="flex items-center space-x-2">
+            <LanguageSelector />
+            <Button 
+              onClick={handleSignOut} 
+              variant="outline" 
+              size="sm"
+              className="flex items-center space-x-2"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="text-sm">{t('nav.logout')}</span>
+            </Button>
+          </div>
         </div>
       </header>
       

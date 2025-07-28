@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider, useAuth } from '@/hooks/useAuth';
+import { TranslationProvider } from '@/hooks/useTranslation';
 import Auth from '@/pages/Auth';
 import Dashboard from '@/pages/Dashboard';
 import Products from '@/pages/Products';
 import Profile from '@/pages/Profile';
 import Orders from '@/pages/Orders';
+import OrderDetails from '@/pages/OrderDetails';
+import Contact from '@/pages/Contact';
 import NotFound from '@/pages/NotFound';
 import Index from '@/pages/Index';
 import Layout from '@/components/Layout';
@@ -114,18 +117,38 @@ const AppContent = () => {
           </ProtectedRoute>
         } 
       />
+      <Route 
+        path="/orders/:orderId" 
+        element={
+          <ProtectedRoute>
+            <Layout cart={cart}>
+              <OrderDetails />
+            </Layout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/track/:trackingNumber" element={
+        <Suspense fallback={<div>Loading...</div>}>
+          <TrackingPage />
+        </Suspense>
+      } />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
 
+const TrackingPage = lazy(() => import('@/pages/TrackingPage'));
+
 const App = () => {
   return (
     <AuthProvider>
-      <Router>
-        <AppContent />
-        <Toaster />
-      </Router>
+      <TranslationProvider>
+        <Router>
+          <AppContent />
+          <Toaster />
+        </Router>
+      </TranslationProvider>
     </AuthProvider>
   );
 };
