@@ -59,7 +59,10 @@ export type Database = {
       orders: {
         Row: {
           created_at: string
+          delivery_date: string | null
+          delivery_instructions: string | null
           id: string
+          preferred_time_slot: string | null
           status: Database["public"]["Enums"]["order_status"]
           supplier_id: string
           total_price: number
@@ -68,7 +71,10 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          delivery_date?: string | null
+          delivery_instructions?: string | null
           id?: string
+          preferred_time_slot?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           supplier_id: string
           total_price: number
@@ -77,7 +83,10 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          delivery_date?: string | null
+          delivery_instructions?: string | null
           id?: string
+          preferred_time_slot?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           supplier_id?: string
           total_price?: number
@@ -153,6 +162,7 @@ export type Database = {
           created_at: string
           full_name: string
           id: string
+          language_preference: string | null
           location: string
           phone: string
           role: Database["public"]["Enums"]["user_role"]
@@ -163,6 +173,7 @@ export type Database = {
           created_at?: string
           full_name: string
           id?: string
+          language_preference?: string | null
           location: string
           phone: string
           role: Database["public"]["Enums"]["user_role"]
@@ -173,6 +184,7 @@ export type Database = {
           created_at?: string
           full_name?: string
           id?: string
+          language_preference?: string | null
           location?: string
           phone?: string
           role?: Database["public"]["Enums"]["user_role"]
@@ -181,12 +193,56 @@ export type Database = {
         }
         Relationships: []
       }
+      shipments: {
+        Row: {
+          created_at: string
+          current_location: string
+          estimated_delivery: string | null
+          id: string
+          order_id: string
+          status: string
+          tracking_number: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_location?: string
+          estimated_delivery?: string | null
+          id?: string
+          order_id: string
+          status?: string
+          tracking_number: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_location?: string
+          estimated_delivery?: string | null
+          id?: string
+          order_id?: string
+          status?: string
+          tracking_number?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shipments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_tracking_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       order_status: "pending" | "confirmed" | "delivered"
