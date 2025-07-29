@@ -8,42 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
 
-    /* Minimalistic Primary Colors */
-    --primary: 221 83% 53%;        /* Clean blue #2563eb */
-    --primary-foreground: 0 0% 100%;
+    /* Modern Orange/Saffron Primary */
+    --primary: 25 95% 53%;         /* Vibrant orange #ff7a00 */
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 30 100% 60%;   /* Lighter orange for effects */
 
-    /* Neutral Colors */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    /* Rich Green Secondary */
+    --secondary: 120 60% 25%;      /* Forest green */
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 40% 98%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 30 100% 50%;         /* Bright orange accent */
+    --accent-foreground: 0 0% 9%;
 
     /* Status Colors */
-    --destructive: 0 84% 60%;      /* Clean red #ef4444 */
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
     
-    --success: 142 71% 45%;        /* Clean green #10b981 */
-    --success-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
     
-    --warning: 38 92% 50%;         /* Clean amber #f59e0b */
-    --warning-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 9%;
 
-    --border: 214.3 31.8% 94%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221 83% 53%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 25 95% 53%;
 
     --radius: 0.5rem;
 
@@ -65,26 +66,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 98%;
+    --foreground: 20 14.3% 4.1%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
 
-    --primary: 28 100% 60%; /* Saffron */
-    --primary-foreground: 0 0% 9%;
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 120 100% 25%; /* Green */
+    --secondary: 120 60% 25%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
 
-    --accent: 240 100% 25%; /* Blue */
-    --accent-foreground: 0 0% 98%;
+    --accent: 30 100% 50%;
+    --accent-foreground: 0 0% 9%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -116,14 +117,26 @@ All colors MUST be HSL.
 
 @layer components {
   .card-minimal {
-    @apply bg-card border border-border/50 rounded-lg shadow-sm hover:shadow-md transition-shadow;
+    @apply bg-card/80 backdrop-blur-sm border border-border/20 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300;
   }
   
   .btn-minimal {
-    @apply transition-all duration-200 ease-in-out;
+    @apply transition-all duration-300 ease-out hover:scale-105;
   }
   
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 100%);
+  }
+
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .hero-glow {
+    box-shadow: 0 0 60px hsl(var(--primary) / 0.3);
   }
 }
