@@ -27,6 +27,9 @@ interface Order {
   total_price: number;
   status: 'pending' | 'confirmed' | 'delivered';
   created_at: string;
+  delivery_date?: string;
+  preferred_time_slot?: string;
+  delivery_instructions?: string;
   vendor_profile?: {
     full_name: string;
     location: string;
@@ -38,6 +41,11 @@ interface Order {
     phone: string;
   };
   order_items?: OrderItem[];
+  shipments?: {
+    id: string;
+    tracking_number: string;
+    status: 'pending' | 'shipped' | 'in_transit' | 'delivered';
+  }[];
 }
 
 interface Profile {
@@ -79,7 +87,8 @@ const Orders = () => {
           order_items(
             *,
             products(name, category)
-          )
+          ),
+          shipments(id, tracking_number, status)
         `)
         .order('created_at', { ascending: false });
 
@@ -92,7 +101,7 @@ const Orders = () => {
       const { data: ordersData, error: ordersError } = await query;
 
       if (ordersError) throw ordersError;
-      setOrders(ordersData || []);
+      setOrders(ordersData as Order[] || []);
 
     } catch (error: any) {
       toast({
@@ -130,6 +139,38 @@ const Orders = () => {
     }
   };
 
+  const createShipment = async (orderId: string) => {
+    try {
+      // Get a tracking number first by calling the function
+      const { data: trackingData, error: trackingError } = await supabase
+        .rpc('generate_tracking_number');
+
+      if (trackingError) throw trackingError;
+
+      const { error } = await supabase
+        .from('shipments')
+        .insert({
+          order_id: orderId,
+          tracking_number: trackingData,
+          status: 'shipped'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Shipment Created",
+        description: "Order has been shipped with tracking number"
+      });
+
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending':
@@ -137,7 +178,7 @@ const Orders = () => {
       case 'confirmed':
         return <CheckCircle className="h-4 w-4" />;
       case 'delivered':
-        return <Truck className="h-4 w-4" />;
+        return <CheckCircle className="h-4 w-4" />;
       default:
         return <Eye className="h-4 w-4" />;
     }
@@ -232,6 +273,12 @@ const Orders = () => {
                     </CardDescription>
                     <CardDescription>
                       Placed on: {new Date(order.created_at).toLocaleDateString()}
+                      {order.delivery_date && (
+                        <span className="block">Delivery: {new Date(order.delivery_date).toLocaleDateString()}</span>
+                      )}
+                      {order.preferred_time_slot && (
+                        <span className="block">Time: {order.preferred_time_slot}</span>
+                      )}
                     </CardDescription>
                   </div>
                   <div className="text-right">
@@ -263,6 +310,19 @@ const Orders = () => {
                   ))}
                 </div>
 
+                {/* Shipment Tracking */}
+                {order.shipments && order.shipments.length > 0 && (
+                  <div className="pt-4 border-t">
+                    <h4 className="font-medium mb-2">Tracking Information:</h4>
+                    {order.shipments.map((shipment) => (
+                      <div key={shipment.id} className="p-3 bg-muted rounded-lg">
+                        <p className="font-medium">Tracking: {shipment.tracking_number}</p>
+                        <p className="text-sm text-muted-foreground">Status: {shipment.status}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {isSupplier && order.status !== 'delivered' && (
                   <div className="flex gap-2 pt-4 border-t">
                     {order.status === 'pending' && (
@@ -274,13 +334,22 @@ const Orders = () => {
                       </Button>
                     )}
                     {order.status === 'confirmed' && (
-                      <Button
-                        onClick={() => updateOrderStatus(order.id, 'delivered')}
-                        variant="outline"
-                        className="flex-1"
-                      >
-                        Mark as Delivered
-                      </Button>
+                      <>
+                        <Button
+                          onClick={() => createShipment(order.id)}
+                          variant="outline"
+                          className="flex-1"
+                        >
+                          Ship Order
+                        </Button>
+                        <Button
+                          onClick={() => updateOrderStatus(order.id, 'delivered')}
+                          variant="outline"
+                          className="flex-1"
+                        >
+                          Mark as Delivered
+                        </Button>
+                      </>
                     )}
                   </div>
                 )}

@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Trash2, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ScheduleDelivery from './ScheduleDelivery';
 
 interface CartItem {
   id: string;
@@ -31,6 +32,12 @@ export const Cart = ({ cart, setCart }: CartProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [stockValidation, setStockValidation] = useState<{[key: string]: number}>({});
+  const [showScheduling, setShowScheduling] = useState(false);
+  const [deliveryInfo, setDeliveryInfo] = useState<{
+    deliveryDate: string;
+    timeSlot: string;
+    instructions: string;
+  } | null>(null);
 
   // Calculate totals
   const subtotal = cart.reduce((sum, item) => sum + (item.price_per_kg * item.quantity), 0);
@@ -103,6 +110,11 @@ export const Cart = ({ cart, setCart }: CartProps) => {
       return;
     }
 
+    if (!deliveryInfo) {
+      setShowScheduling(true);
+      return;
+    }
+
     setLoading(true);
     
     // Validate stock first
@@ -142,7 +154,10 @@ export const Cart = ({ cart, setCart }: CartProps) => {
             vendor_id: user.id,
             supplier_id: supplierId,
             total_price: totalPrice,
-            status: 'pending'
+            status: 'pending',
+            delivery_date: deliveryInfo.deliveryDate,
+            preferred_time_slot: deliveryInfo.timeSlot,
+            delivery_instructions: deliveryInfo.instructions || null
           })
           .select()
           .single();
@@ -178,10 +193,12 @@ export const Cart = ({ cart, setCart }: CartProps) => {
 
       toast({
         title: "Order Placed Successfully!",
-        description: "Your orders have been placed and suppliers will be notified."
+        description: "Your orders have been placed with scheduled delivery."
       });
 
       setCart([]);
+      setDeliveryInfo(null);
+      setShowScheduling(false);
       navigate('/orders');
 
     } catch (error: any) {
@@ -193,6 +210,15 @@ export const Cart = ({ cart, setCart }: CartProps) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSchedule = (info: { deliveryDate: string; timeSlot: string; instructions: string }) => {
+    setDeliveryInfo(info);
+    setShowScheduling(false);
+    toast({
+      title: "Delivery Scheduled",
+      description: `Delivery set for ${new Date(info.deliveryDate).toLocaleDateString()} at ${info.timeSlot}`
+    });
   };
 
   if (cart.length === 0) {
@@ -309,14 +335,27 @@ export const Cart = ({ cart, setCart }: CartProps) => {
                 </div>
               </div>
               
-              <Button 
-                onClick={placeOrder} 
-                disabled={loading} 
-                className="w-full"
-                size="lg"
-              >
-                {loading ? "Placing Order..." : "Place Order"}
-              </Button>
+              {deliveryInfo && (
+                <div className="mb-4 p-3 bg-muted rounded-lg">
+                  <h4 className="font-medium">Scheduled Delivery:</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(deliveryInfo.deliveryDate).toLocaleDateString()} at {deliveryInfo.timeSlot}
+                  </p>
+                </div>
+              )}
+
+              {showScheduling ? (
+                <ScheduleDelivery onSchedule={handleSchedule} />
+              ) : (
+                <Button 
+                  onClick={placeOrder} 
+                  disabled={loading} 
+                  className="w-full"
+                  size="lg"
+                >
+                  {loading ? "Placing Order..." : deliveryInfo ? "Place Order" : "Schedule & Order"}
+                </Button>
+              )}
               
               <Button 
                 variant="outline" 

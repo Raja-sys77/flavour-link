@@ -39,14 +39,19 @@ const Index = () => {
             <Button onClick={() => navigate('/auth')} size="lg" className="px-8">
               Get Started
             </Button>
-            <Button variant="outline" size="lg" className="px-8">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="px-8"
+              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               Learn More
             </Button>
           </div>
         </div>
 
         {/* Features Section */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div id="features" className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           <Card className="text-center">
             <CardHeader>
               <ShoppingCart className="h-12 w-12 text-orange-600 mx-auto mb-4" />
