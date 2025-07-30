@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,8 +11,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Search, ShoppingCart, Edit, Trash2, TrendingUp, TrendingDown } from 'lucide-react';
+import { Plus, Search, ShoppingCart, Edit, Trash2, TrendingUp, TrendingDown, Star, Eye } from 'lucide-react';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import ProductReviews from '@/components/ProductReviews';
 
 interface Product {
   id: string;
@@ -28,6 +30,9 @@ interface Product {
     location: string;
     phone: string;
   };
+  reviews?: Array<{
+    rating: number;
+  }>;
 }
 
 interface Profile {
@@ -51,6 +56,7 @@ interface ProductsProps {
 
 const Products = ({ cart, setCart }: ProductsProps) => {
   const { user } = useAuth();
+  const { trackProductEvent, trackUserAction } = useAnalytics();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -61,6 +67,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
   const [sortBy, setSortBy] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   const [newProduct, setNewProduct] = useState({
@@ -80,6 +87,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
   useEffect(() => {
     if (user) {
       fetchData();
+      trackUserAction('view_products_page');
     }
   }, [user]);
 
@@ -99,12 +107,13 @@ const Products = ({ cart, setCart }: ProductsProps) => {
       if (profileError) throw profileError;
       setProfile(profileData);
 
-      // Fetch all products with supplier info
+      // Fetch all products with supplier info and reviews
       const { data: productsData, error: productsError } = await supabase
         .from('products')
         .select(`
           *,
-          supplier_profile:profiles!products_supplier_id_fkey(full_name, location, phone)
+          supplier_profile:profiles!products_supplier_id_fkey(full_name, location, phone),
+          reviews(rating)
         `)
         .order('created_at', { ascending: false });
 
@@ -217,6 +226,12 @@ const Products = ({ cart, setCart }: ProductsProps) => {
       };
       setCart([...cart, cartItem]);
     }
+
+    trackProductEvent('add_to_cart', product.id, {
+      product_name: product.name,
+      price: product.price_per_kg,
+      supplier_id: product.supplier_id
+    });
 
     toast({
       title: "Added to Cart",
@@ -548,31 +563,44 @@ const Products = ({ cart, setCart }: ProductsProps) => {
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.map((product) => (
-            <Card key={product.id} className="overflow-hidden">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{product.name}</CardTitle>
-                    <CardDescription>{product.supplier_profile?.full_name}</CardDescription>
-                  </div>
-                  <Badge>{product.category}</Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-primary">
-                      ₹{Number(product.price_per_kg).toFixed(2)}
-                    </p>
-                    <p className="text-sm text-muted-foreground">per kg</p>
-                  </div>
-                  {product.market_average && (
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Market avg:</p>
-                      <p className="text-sm">₹{Number(product.market_average).toFixed(2)}</p>
+          {filteredProducts.map((product) => {
+            const averageRating = product.reviews && product.reviews.length > 0
+              ? product.reviews.reduce((sum, review) => sum + review.rating, 0) / product.reviews.length
+              : 0;
+
+            return (
+              <Card key={product.id} className="overflow-hidden card-minimal hover:scale-105 transition-all duration-300">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">{product.name}</CardTitle>
+                      <CardDescription className="flex items-center gap-2 mt-1">
+                        {product.supplier_profile?.full_name}
+                        {averageRating > 0 && (
+                          <div className="flex items-center gap-1">
+                            <Star className="h-3 w-3 fill-warning text-warning" />
+                            <span className="text-xs">{averageRating.toFixed(1)}</span>
+                          </div>
+                        )}
+                      </CardDescription>
                     </div>
-                  )}
+                    <Badge variant="secondary">{product.category}</Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-2xl font-bold text-primary">
+                        ₹{Number(product.price_per_kg).toFixed(2)}
+                      </p>
+                      <p className="text-sm text-muted-foreground">per kg</p>
+                    </div>
+                    {product.market_average && (
+                      <div className="text-right">
+                        <p className="text-sm text-muted-foreground">Market avg:</p>
+                        <p className="text-sm">₹{Number(product.market_average).toFixed(2)}</p>
+                      </div>
+                    )}
                 </div>
                 
                 <div className="space-y-2">
@@ -618,17 +646,100 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                   </div>
                 )}
                 
-                {!isSupplier && (
-                  <Button 
-                    onClick={() => addToCart(product)}
-                    className="w-full transition-all hover:scale-105"
-                    disabled={product.stock_available === 0}
-                    variant={product.stock_available === 0 ? "secondary" : "default"}
-                  >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    {product.stock_available === 0 ? 'Out of Stock' : 'Add to Cart'}
-                  </Button>
-                )}
+                <div className="flex gap-2">
+                  {!isSupplier && (
+                    <Button 
+                      onClick={() => addToCart(product)}
+                      className="flex-1 transition-all hover:scale-105"
+                      disabled={product.stock_available === 0}
+                      variant={product.stock_available === 0 ? "secondary" : "default"}
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      {product.stock_available === 0 ? 'Out of Stock' : 'Add to Cart'}
+                    </Button>
+                  )}
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => {
+                          setSelectedProductId(product.id);
+                          trackProductEvent('view_details', product.id, { product_name: product.name });
+                        }}
+                      >
+                        <Eye className="h-4 w-4 mr-1" />
+                        Details
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>{product.name}</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <h4 className="font-medium mb-2">Product Information</h4>
+                            <div className="space-y-2 text-sm">
+                              <div>
+                                <span className="text-muted-foreground">Category:</span>
+                                <span className="ml-2">{product.category}</span>
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">Price:</span>
+                                <span className="ml-2 font-bold">₹{product.price_per_kg}/kg</span>
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">Stock:</span>
+                                <span className="ml-2">{product.stock_available} kg</span>
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">Supplier:</span>
+                                <span className="ml-2">{product.supplier_profile?.full_name}</span>
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">Location:</span>
+                                <span className="ml-2">{product.supplier_profile?.location}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            {product.description && (
+                              <div>
+                                <h4 className="font-medium mb-2">Description</h4>
+                                <p className="text-sm text-muted-foreground">{product.description}</p>
+                              </div>
+                            )}
+                            {averageRating > 0 && (
+                              <div className="mt-4">
+                                <h4 className="font-medium mb-2">Rating</h4>
+                                <div className="flex items-center gap-2">
+                                  <div className="flex">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                      <Star
+                                        key={star}
+                                        className={`h-4 w-4 ${
+                                          star <= Math.round(averageRating) 
+                                            ? 'fill-warning text-warning' 
+                                            : 'text-muted-foreground'
+                                        }`}
+                                      />
+                                    ))}
+                                  </div>
+                                  <span className="text-sm">{averageRating.toFixed(1)} ({product.reviews?.length} reviews)</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {selectedProductId && (
+                          <ProductReviews productId={selectedProductId} />
+                        )}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
                 
                 {isSupplier && product.supplier_id === user?.id && (
                   <div className="flex gap-2">
@@ -652,9 +763,10 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                     </Button>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

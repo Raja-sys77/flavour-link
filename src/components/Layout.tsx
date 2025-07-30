@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from '@/hooks/useTranslation';
 import { LanguageSelector } from '@/components/LanguageSelector';
+import NotificationDropdown from '@/components/NotificationDropdown';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { LogOut, Package, User, LayoutDashboard, ShoppingCart, ClipboardList } from 'lucide-react';
 
 interface LayoutProps {
@@ -17,10 +19,12 @@ const Layout = ({ children, cart }: LayoutProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const { trackUserAction } = useAnalytics();
   
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const handleSignOut = async () => {
+    trackUserAction('logout');
     await signOut();
     navigate('/');
   };
@@ -100,7 +104,8 @@ const Layout = ({ children, cart }: LayoutProps) => {
             </Link>
           </nav>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
+            <NotificationDropdown />
             <LanguageSelector />
             <Button 
               onClick={handleSignOut} 
