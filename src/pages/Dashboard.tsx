@@ -106,85 +106,119 @@ const Dashboard = () => {
     .reduce((sum, order) => sum + Number(order.total_price), 0);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Welcome back, {profile?.full_name}!</h1>
-          <p className="text-muted-foreground">
-            {isSupplier ? 'Supplier Dashboard' : 'Vendor Dashboard'}
-          </p>
+    <div className="space-y-8 animate-fade-in">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-background to-accent/5 p-8 border border-primary/10">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
+        <div className="relative flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent mb-2">
+              Welcome back, {profile?.full_name}!
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              {isSupplier ? 'Supplier Dashboard' : 'Vendor Dashboard'}
+            </p>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Badge 
+              variant={isSupplier ? 'default' : 'secondary'} 
+              className="text-sm px-4 py-2 rounded-full bg-primary/10 text-primary border-primary/20"
+            >
+              {profile?.role?.toUpperCase()}
+            </Badge>
+          </div>
         </div>
-        <Badge variant={isSupplier ? 'default' : 'secondary'} className="text-sm">
-          {profile?.role?.toUpperCase()}
-        </Badge>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="relative overflow-hidden bg-gradient-to-br from-card/50 to-card backdrop-blur-sm border-primary/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full filter blur-xl"></div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               {isSupplier ? 'Total Products' : 'Orders Placed'}
             </CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Package className="h-5 w-5 text-primary" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-3xl font-bold text-foreground mb-1">
               {isSupplier ? products.length : orders.filter(o => o.vendor_id === user?.id).length}
             </div>
+            <p className="text-xs text-muted-foreground">
+              {isSupplier ? 'Active products' : 'Total orders'}
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="relative overflow-hidden bg-gradient-to-br from-card/50 to-card backdrop-blur-sm border-secondary/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-secondary/5 rounded-full filter blur-xl"></div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               {isSupplier ? 'Orders Received' : 'Total Spent'}
             </CardTitle>
-            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+            <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+              <ShoppingCart className="h-5 w-5 text-secondary" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-3xl font-bold text-foreground mb-1">
               {isSupplier ? 
                 orders.filter(o => o.supplier_id === user?.id).length :
                 `₹${totalRevenue.toFixed(2)}`
               }
             </div>
+            <p className="text-xs text-muted-foreground">
+              {isSupplier ? 'Orders received' : 'Total expenditure'}
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="relative overflow-hidden bg-gradient-to-br from-card/50 to-card backdrop-blur-sm border-accent/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-accent/5 rounded-full filter blur-xl"></div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               {isSupplier ? 'Revenue' : 'Pending Orders'}
             </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+              <TrendingUp className="h-5 w-5 text-accent" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-3xl font-bold text-foreground mb-1">
               {isSupplier ? 
                 `₹${totalRevenue.toFixed(2)}` :
                 orders.filter(o => o.vendor_id === user?.id && o.status === 'pending').length
               }
             </div>
+            <p className="text-xs text-muted-foreground">
+              {isSupplier ? 'Total revenue' : 'Awaiting confirmation'}
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="relative overflow-hidden bg-gradient-to-br from-card/50 to-card backdrop-blur-sm border-primary/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full filter blur-xl"></div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Location</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-muted-foreground">Location</CardTitle>
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Users className="h-5 w-5 text-primary" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-medium">{profile?.location}</div>
+            <div className="text-2xl font-bold text-foreground mb-1">{profile?.location}</div>
+            <p className="text-xs text-muted-foreground">Operating location</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Recent Orders */}
-      <Card>
+      <Card className="bg-gradient-to-br from-card/50 to-card backdrop-blur-sm border-border/50 shadow-lg">
         <CardHeader>
-          <CardTitle>Recent Orders</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+            Recent Orders
+          </CardTitle>
+          <CardDescription className="text-base">
             {isSupplier ? 'Orders received from vendors' : 'Your recent orders'}
           </CardDescription>
         </CardHeader>
