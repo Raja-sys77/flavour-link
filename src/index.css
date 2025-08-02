@@ -8,30 +8,29 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Modern dark theme with vibrant accents */
-    --background: 224 100% 4%;        /* Deep navy blue */
-    --foreground: 0 0% 98%;
+    /* Clean minimalistic theme */
+    --background: 0 0% 100%;           /* Pure white */
+    --foreground: 222 84% 4.9%;       /* Deep charcoal */
 
-    --card: 225 25% 8%;               /* Slightly lighter navy */
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;                /* White cards */
+    --card-foreground: 222 84% 4.9%;
 
-    --popover: 225 25% 8%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4.9%;
 
-    /* Vibrant gradient primary - Orange to Red */
-    --primary: 20 100% 60%;           /* Vibrant orange-red */
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 30 100% 70%;      /* Brighter orange for effects */
+    /* Subtle primary - soft blue */
+    --primary: 221 83% 53%;           /* Clean blue */
+    --primary-foreground: 210 40% 98%;
 
-    /* Electric Blue Secondary */
-    --secondary: 210 100% 50%;        /* Electric blue */
-    --secondary-foreground: 0 0% 98%;
+    /* Minimal secondary - light gray */
+    --secondary: 210 40% 96%;         /* Very light gray */
+    --secondary-foreground: 222 84% 4.9%;
 
-    --muted: 225 25% 12%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 46.9%;
 
-    --accent: 280 100% 60%;           /* Purple accent */
-    --accent-foreground: 0 0% 98%;
+    --accent: 210 40% 96%;            /* Subtle accent */
+    --accent-foreground: 222 84% 4.9%;
 
     /* Status Colors */
     --destructive: 0 84% 60%;
@@ -67,27 +66,27 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Light theme with vibrant accents */
-    --background: 0 0% 100%;
-    --foreground: 224 25% 8%;
+    /* Dark mode - subtle and clean */
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 224 25% 8%;
+    --card: 222 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 224 25% 8%;
+    --popover: 222 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 20 100% 60%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 100% 50%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 217 32% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 95%;
-    --muted-foreground: 215 25% 45%;
+    --muted: 217 32% 17.5%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 280 100% 60%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 217 32% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -119,67 +118,14 @@ All colors MUST be HSL.
 
 @layer components {
   .card-minimal {
-    @apply bg-card/80 backdrop-blur-sm border border-border/20 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
   }
   
   .btn-minimal {
-    @apply transition-all duration-300 ease-out hover:scale-105;
+    @apply transition-all duration-200 ease-out;
   }
   
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
-  }
-
-  .gradient-bg {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-  }
-
-  .glass-effect {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-2xl;
-  }
-
-  .hero-glow {
-    box-shadow: 0 0 100px hsl(var(--primary) / 0.4), 0 0 200px hsl(var(--accent) / 0.2);
-  }
-
-  .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .animated-gradient {
-    background: linear-gradient(-45deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)), hsl(var(--primary)));
-    background-size: 400% 400%;
-    animation: gradient 8s ease infinite;
-  }
-
-  .floating {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .pulse-glow {
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 40px hsl(var(--accent) / 0.2);
-  }
-  50% { 
-    box-shadow: 0 0 40px hsl(var(--primary) / 0.5), 0 0 80px hsl(var(--accent) / 0.3);
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2;
   }
 }

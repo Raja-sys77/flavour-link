@@ -24,193 +24,146 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen animated-gradient">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden min-h-screen flex items-center">
-        {/* Ultra Modern Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-96 h-96 bg-primary/30 rounded-full filter blur-3xl floating"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-accent/40 rounded-full filter blur-3xl floating delay-1000"></div>
-          <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-secondary/30 rounded-full filter blur-3xl floating delay-500"></div>
-          <div className="absolute bottom-1/3 left-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl floating delay-700"></div>
-        </div>
-        
-        {/* Futuristic Grid Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='80' height='80' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 80 0 L 0 0 0 80' fill='none' stroke='%23ff4500' stroke-width='1' opacity='0.3'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)' /%3E%3C/svg%3E")`,
-          }}></div>
-        </div>
-
-        <div className="relative container mx-auto px-4 py-24 text-center">
-          <div className="max-w-5xl mx-auto">
-            {/* Ultra Modern Badge */}
-            <div className="inline-flex items-center px-6 py-3 rounded-full glass-effect text-white text-sm font-semibold mb-12 pulse-glow animate-fade-in">
-              <span className="w-3 h-3 bg-primary rounded-full mr-3 animate-pulse"></span>
-              🚀 India's #1 B2B Marketplace for Street Food Vendors
+    <div className="min-h-screen bg-background">
+      {/* Clean Hero Section */}
+      <div className="relative min-h-screen flex items-center">
+        <div className="container mx-auto px-4 py-24 text-center">
+          <div className="max-w-4xl mx-auto">
+            {/* Simple Badge */}
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
+              India's Leading B2B Marketplace
             </div>
 
-            {/* Spectacular Main Heading */}
-            <h1 className="text-6xl md:text-8xl font-black mb-12 gradient-text leading-tight animate-fade-in">
-              Welcome to the
-              <br />
-              <span className="relative inline-block">
-                Future of
-                <div className="absolute -bottom-4 left-0 right-0 h-2 animated-gradient rounded-full"></div>
-              </span>
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary animate-pulse">
-                VENDORA
+            {/* Clean Heading */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-8 text-foreground leading-tight">
+              Vendora
+              <span className="block text-2xl md:text-3xl font-normal text-muted-foreground mt-2">
+                Streamline your street food business
               </span>
             </h1>
 
-            {/* Epic Subtitle */}
-            <p className="text-2xl md:text-3xl text-white/90 mb-16 max-w-4xl mx-auto leading-relaxed font-light animate-fade-in">
-              🎯 Transform your street food empire with AI-powered marketplace technology. 
-              Connect with 500+ verified suppliers, automate procurement, and scale beyond limits.
+            {/* Simple Subtitle */}
+            <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+              Connect with verified suppliers, streamline procurement, and grow your business with our intelligent marketplace platform.
             </p>
 
-            {/* Revolutionary CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
+            {/* Clean CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
               <Button 
                 onClick={() => navigate('/auth')} 
                 size="lg" 
-                className="px-12 py-6 text-xl font-bold rounded-3xl animated-gradient text-white shadow-2xl hover:shadow-primary/25 transform hover:scale-110 transition-all duration-500 min-w-[220px] pulse-glow"
+                className="px-8 py-3 text-base font-medium rounded-md bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm hover:shadow-md transition-all duration-200"
               >
-                🚀 Start Your Empire
-                <div className="ml-3 w-3 h-3 bg-white rounded-full animate-bounce"></div>
+                Get Started
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="px-12 py-6 text-xl font-bold rounded-3xl border-3 border-white/30 glass-effect text-white hover:border-white/50 hover:bg-white/10 transform hover:scale-110 transition-all duration-500 min-w-[220px]"
+                className="px-8 py-3 text-base font-medium rounded-md border border-border hover:bg-muted/50 transition-all duration-200"
                 onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                ⚡ Explore Power
+                Learn More
               </Button>
             </div>
 
-            {/* Epic Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 max-w-4xl mx-auto">
-              <div className="text-center glass-effect rounded-2xl p-6 pulse-glow">
-                <div className="text-5xl font-black gradient-text mb-3">5000+</div>
-                <div className="text-lg text-white/80 font-semibold">💪 Active Vendors</div>
+            {/* Simple Stats */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-foreground mb-2">1000+</div>
+                <div className="text-sm text-muted-foreground">Active Vendors</div>
               </div>
-              <div className="text-center glass-effect rounded-2xl p-6 pulse-glow">
-                <div className="text-5xl font-black gradient-text mb-3">1000+</div>
-                <div className="text-lg text-white/80 font-semibold">✅ Verified Suppliers</div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-foreground mb-2">500+</div>
+                <div className="text-sm text-muted-foreground">Verified Suppliers</div>
               </div>
-              <div className="text-center glass-effect rounded-2xl p-6 pulse-glow">
-                <div className="text-5xl font-black gradient-text mb-3">100K+</div>
-                <div className="text-lg text-white/80 font-semibold">🎯 Orders Completed</div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-foreground mb-2">50K+</div>
+                <div className="text-sm text-muted-foreground">Orders Completed</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Revolutionary Features Section */}
-      <div className="relative py-32 animated-gradient">
+      {/* Clean Features Section */}
+      <div className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          {/* Epic Section Header */}
-          <div className="text-center mb-24">
-            <h2 className="text-6xl md:text-7xl font-black mb-8 gradient-text">
-              🚀 Why Choose VENDORA?
+          {/* Simple Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+              Why Choose Vendora?
             </h2>
-            <p className="text-2xl md:text-3xl text-white/90 max-w-4xl mx-auto font-light">
-              The ultimate AI-powered ecosystem for street food domination 🎯
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Everything you need to run a successful street food business
             </p>
           </div>
 
-          {/* Mind-Blowing Features Grid */}
-          <div id="features" className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-32">
-            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
-              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-6 text-center">
-                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
-                  <ShoppingCart className="h-12 w-12 text-white" />
-                </div>
-                <CardTitle className="text-2xl font-black text-white">🤖 Smart Ordering</CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
-                  Revolutionary AI ordering with price prediction, bulk optimization, and quantum-speed automation.
-                </CardDescription>
-              </CardContent>
+          {/* Clean Features Grid */}
+          <div id="features" className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+            <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
+                <ShoppingCart className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle className="text-lg font-semibold mb-2">Smart Ordering</CardTitle>
+              <CardDescription className="text-sm leading-relaxed">
+                Streamlined ordering system with price comparison and bulk discounts.
+              </CardDescription>
             </Card>
 
-            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
-              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-6 text-center">
-                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
-                  <Package className="h-12 w-12 text-white" />
-                </div>
-                <CardTitle className="text-2xl font-black text-white">📦 Inventory Control</CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
-                  Next-gen stock tracking with predictive analytics, automated alerts, and real-time optimization.
-                </CardDescription>
-              </CardContent>
+            <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
+                <Package className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle className="text-lg font-semibold mb-2">Inventory Control</CardTitle>
+              <CardDescription className="text-sm leading-relaxed">
+                Real-time stock tracking and automated alerts for better management.
+              </CardDescription>
             </Card>
 
-            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
-              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-6 text-center">
-                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
-                  <Users className="h-12 w-12 text-white" />
-                </div>
-                <CardTitle className="text-2xl font-black text-white">🌟 Verified Network</CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
-                  Elite network of 1000+ verified suppliers with quality ratings, certifications, and performance metrics.
-                </CardDescription>
-              </CardContent>
+            <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle className="text-lg font-semibold mb-2">Verified Network</CardTitle>
+              <CardDescription className="text-sm leading-relaxed">
+                Connect with 500+ verified suppliers with quality ratings.
+              </CardDescription>
             </Card>
 
-            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
-              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-6 text-center">
-                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
-                  <TrendingUp className="h-12 w-12 text-white" />
-                </div>
-                <CardTitle className="text-2xl font-black text-white">📊 Market Intelligence</CardTitle>
-              </CardHeader>
-              <CardContent className="relative">
-                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
-                  Advanced market analytics with real-time pricing, demand forecasting, and profit optimization.
-                </CardDescription>
-              </CardContent>
+            <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
+                <TrendingUp className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle className="text-lg font-semibold mb-2">Market Intelligence</CardTitle>
+              <CardDescription className="text-sm leading-relaxed">
+                Real-time pricing and market trends to maximize profitability.
+              </CardDescription>
             </Card>
           </div>
 
-          {/* Ultimate CTA Section */}
-          <div className="relative">
-            <div className="absolute inset-0 animated-gradient rounded-3xl blur-3xl"></div>
-            <div className="relative glass-effect border border-white/20 rounded-3xl p-16 text-center max-w-5xl mx-auto pulse-glow">
-              <h2 className="text-5xl md:text-6xl font-black mb-8 gradient-text">
-                🚀 Ready to Dominate the Market?
-              </h2>
-              <p className="text-2xl md:text-3xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-                Join 5000+ vendors already building their empires with VENDORA's revolutionary platform 🎯
-              </p>
-              <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                <Button 
-                  onClick={() => navigate('/auth')} 
-                  size="lg" 
-                  className="px-16 py-8 text-2xl font-black rounded-3xl animated-gradient text-white shadow-2xl hover:shadow-primary/25 transform hover:scale-110 transition-all duration-500 pulse-glow"
-                >
-                  💥 Start Your Empire NOW
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="px-16 py-8 text-2xl font-black rounded-3xl border-3 border-white/30 glass-effect text-white hover:border-white/50 hover:bg-white/10 transform hover:scale-110 transition-all duration-500"
-                >
-                  🎯 Book VIP Demo
-                </Button>
-              </div>
+          {/* Clean CTA Section */}
+          <div className="bg-card border border-border rounded-lg p-12 text-center max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+              Ready to Get Started?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+              Join hundreds of vendors already growing their business with Vendora's marketplace platform.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => navigate('/auth')} 
+                size="lg" 
+                className="px-8 py-3 text-base font-medium rounded-md bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm hover:shadow-md transition-all duration-200"
+              >
+                Start Free Trial
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="px-8 py-3 text-base font-medium rounded-md border border-border hover:bg-muted/50 transition-all duration-200"
+              >
+                Contact Sales
+              </Button>
             </div>
           </div>
         </div>

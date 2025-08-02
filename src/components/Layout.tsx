@@ -30,11 +30,11 @@ const Layout = ({ children, cart }: LayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen animated-gradient">
-      <header className="glass-effect border-b border-white/10 shadow-2xl sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/dashboard" className="text-3xl font-black gradient-text pulse-glow">
-            🚀 VENDORA
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border bg-card shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link to="/dashboard" className="text-2xl font-bold text-primary">
+            Vendora
           </Link>
           
           <nav className="flex items-center space-x-4">
@@ -120,10 +120,8 @@ const Layout = ({ children, cart }: LayoutProps) => {
         </div>
       </header>
       
-      <main className="container mx-auto px-6 py-12">
-        <div className="glass-effect rounded-3xl p-8 shadow-2xl">
-          {children}
-        </div>
+      <main className="container mx-auto px-4 py-8">
+        {children}
       </main>
     </div>
   );
