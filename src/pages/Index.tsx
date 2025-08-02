@@ -24,186 +24,191 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="min-h-screen animated-gradient">
       {/* Hero Section */}
       <div className="relative overflow-hidden min-h-screen flex items-center">
-        {/* Animated Background Elements */}
+        {/* Ultra Modern Animated Background */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/20 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-secondary/20 rounded-full filter blur-3xl animate-pulse delay-500"></div>
+          <div className="absolute top-10 left-10 w-96 h-96 bg-primary/30 rounded-full filter blur-3xl floating"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-accent/40 rounded-full filter blur-3xl floating delay-1000"></div>
+          <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-secondary/30 rounded-full filter blur-3xl floating delay-500"></div>
+          <div className="absolute bottom-1/3 left-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl floating delay-700"></div>
         </div>
         
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Futuristic Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='80' height='80' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 80 0 L 0 0 0 80' fill='none' stroke='%23ff4500' stroke-width='1' opacity='0.3'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)' /%3E%3C/svg%3E")`,
           }}></div>
         </div>
 
         <div className="relative container mx-auto px-4 py-24 text-center">
           <div className="max-w-5xl mx-auto">
-            {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse"></span>
-              India's #1 B2B Marketplace for Street Food Vendors
+            {/* Ultra Modern Badge */}
+            <div className="inline-flex items-center px-6 py-3 rounded-full glass-effect text-white text-sm font-semibold mb-12 pulse-glow animate-fade-in">
+              <span className="w-3 h-3 bg-primary rounded-full mr-3 animate-pulse"></span>
+              🚀 India's #1 B2B Marketplace for Street Food Vendors
             </div>
 
-            {/* Main Heading */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent leading-tight">
-              Welcome to
+            {/* Spectacular Main Heading */}
+            <h1 className="text-6xl md:text-8xl font-black mb-12 gradient-text leading-tight animate-fade-in">
+              Welcome to the
               <br />
-              <span className="relative">
-                Vendora
-                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+              <span className="relative inline-block">
+                Future of
+                <div className="absolute -bottom-4 left-0 right-0 h-2 animated-gradient rounded-full"></div>
+              </span>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary animate-pulse">
+                VENDORA
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-              Transform your street food business with our premium B2B marketplace. 
-              Connect with verified suppliers, streamline procurement, and scale your operations.
+            {/* Epic Subtitle */}
+            <p className="text-2xl md:text-3xl text-white/90 mb-16 max-w-4xl mx-auto leading-relaxed font-light animate-fade-in">
+              🎯 Transform your street food empire with AI-powered marketplace technology. 
+              Connect with 500+ verified suppliers, automate procurement, and scale beyond limits.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            {/* Revolutionary CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
               <Button 
                 onClick={() => navigate('/auth')} 
                 size="lg" 
-                className="px-8 py-4 text-lg font-semibold rounded-2xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 min-w-[180px]"
+                className="px-12 py-6 text-xl font-bold rounded-3xl animated-gradient text-white shadow-2xl hover:shadow-primary/25 transform hover:scale-110 transition-all duration-500 min-w-[220px] pulse-glow"
               >
-                Get Started Free
-                <div className="ml-2 w-2 h-2 bg-white/80 rounded-full animate-pulse"></div>
+                🚀 Start Your Empire
+                <div className="ml-3 w-3 h-3 bg-white rounded-full animate-bounce"></div>
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="px-8 py-4 text-lg font-semibold rounded-2xl border-2 border-primary/30 hover:border-primary/50 backdrop-blur-sm bg-background/50 hover:bg-primary/5 transform hover:scale-105 transition-all duration-300 min-w-[180px]"
+                className="px-12 py-6 text-xl font-bold rounded-3xl border-3 border-white/30 glass-effect text-white hover:border-white/50 hover:bg-white/10 transform hover:scale-110 transition-all duration-500 min-w-[220px]"
                 onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Explore Features
+                ⚡ Explore Power
               </Button>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">1000+</div>
-                <div className="text-sm text-muted-foreground">Active Vendors</div>
+            {/* Epic Stats */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 max-w-4xl mx-auto">
+              <div className="text-center glass-effect rounded-2xl p-6 pulse-glow">
+                <div className="text-5xl font-black gradient-text mb-3">5000+</div>
+                <div className="text-lg text-white/80 font-semibold">💪 Active Vendors</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm text-muted-foreground">Verified Suppliers</div>
+              <div className="text-center glass-effect rounded-2xl p-6 pulse-glow">
+                <div className="text-5xl font-black gradient-text mb-3">1000+</div>
+                <div className="text-lg text-white/80 font-semibold">✅ Verified Suppliers</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">50K+</div>
-                <div className="text-sm text-muted-foreground">Orders Completed</div>
+              <div className="text-center glass-effect rounded-2xl p-6 pulse-glow">
+                <div className="text-5xl font-black gradient-text mb-3">100K+</div>
+                <div className="text-lg text-white/80 font-semibold">🎯 Orders Completed</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="relative py-24 bg-gradient-to-b from-background to-primary/5">
+      {/* Revolutionary Features Section */}
+      <div className="relative py-32 animated-gradient">
         <div className="container mx-auto px-4">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-              Why Choose Vendora?
+          {/* Epic Section Header */}
+          <div className="text-center mb-24">
+            <h2 className="text-6xl md:text-7xl font-black mb-8 gradient-text">
+              🚀 Why Choose VENDORA?
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to run a successful street food business in one platform
+            <p className="text-2xl md:text-3xl text-white/90 max-w-4xl mx-auto font-light">
+              The ultimate AI-powered ecosystem for street food domination 🎯
             </p>
           </div>
 
-          {/* Features Grid */}
-          <div id="features" className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card backdrop-blur-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <CardHeader className="relative pb-4 text-center">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <ShoppingCart className="h-10 w-10 text-primary" />
+          {/* Mind-Blowing Features Grid */}
+          <div id="features" className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-32">
+            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
+              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-6 text-center">
+                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
+                  <ShoppingCart className="h-12 w-12 text-white" />
                 </div>
-                <CardTitle className="text-xl font-bold">Smart Ordering</CardTitle>
+                <CardTitle className="text-2xl font-black text-white">🤖 Smart Ordering</CardTitle>
               </CardHeader>
               <CardContent className="relative">
-                <CardDescription className="text-base leading-relaxed">
-                  AI-powered ordering system with price comparison, bulk discounts, and automated reordering.
+                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
+                  Revolutionary AI ordering with price prediction, bulk optimization, and quantum-speed automation.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card backdrop-blur-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <CardHeader className="relative pb-4 text-center">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Package className="h-10 w-10 text-secondary" />
+            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
+              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-6 text-center">
+                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
+                  <Package className="h-12 w-12 text-white" />
                 </div>
-                <CardTitle className="text-xl font-bold">Inventory Control</CardTitle>
+                <CardTitle className="text-2xl font-black text-white">📦 Inventory Control</CardTitle>
               </CardHeader>
               <CardContent className="relative">
-                <CardDescription className="text-base leading-relaxed">
-                  Real-time stock tracking, automated alerts, and predictive analytics for optimal inventory management.
+                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
+                  Next-gen stock tracking with predictive analytics, automated alerts, and real-time optimization.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card backdrop-blur-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <CardHeader className="relative pb-4 text-center">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Users className="h-10 w-10 text-accent" />
+            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
+              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-6 text-center">
+                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
+                  <Users className="h-12 w-12 text-white" />
                 </div>
-                <CardTitle className="text-xl font-bold">Verified Network</CardTitle>
+                <CardTitle className="text-2xl font-black text-white">🌟 Verified Network</CardTitle>
               </CardHeader>
               <CardContent className="relative">
-                <CardDescription className="text-base leading-relaxed">
-                  Connect with 500+ verified suppliers with quality ratings, certifications, and performance metrics.
+                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
+                  Elite network of 1000+ verified suppliers with quality ratings, certifications, and performance metrics.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card backdrop-blur-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <CardHeader className="relative pb-4 text-center">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <TrendingUp className="h-10 w-10 text-primary" />
+            <Card className="group relative overflow-hidden border-0 glass-effect hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 pulse-glow">
+              <div className="absolute inset-0 animated-gradient opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-6 text-center">
+                <div className="w-24 h-24 mx-auto mb-8 rounded-3xl animated-gradient flex items-center justify-center group-hover:scale-125 transition-transform duration-500 floating">
+                  <TrendingUp className="h-12 w-12 text-white" />
                 </div>
-                <CardTitle className="text-xl font-bold">Market Intelligence</CardTitle>
+                <CardTitle className="text-2xl font-black text-white">📊 Market Intelligence</CardTitle>
               </CardHeader>
               <CardContent className="relative">
-                <CardDescription className="text-base leading-relaxed">
-                  Real-time pricing, demand forecasting, and market trends to maximize your profitability.
+                <CardDescription className="text-lg leading-relaxed text-white/80 font-medium">
+                  Advanced market analytics with real-time pricing, demand forecasting, and profit optimization.
                 </CardDescription>
               </CardContent>
             </Card>
           </div>
 
-          {/* CTA Section */}
+          {/* Ultimate CTA Section */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 rounded-3xl blur-3xl"></div>
-            <div className="relative bg-gradient-to-r from-card/80 to-card/60 backdrop-blur-sm border border-primary/20 rounded-3xl p-12 text-center max-w-4xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-                Ready to Scale Your Business?
+            <div className="absolute inset-0 animated-gradient rounded-3xl blur-3xl"></div>
+            <div className="relative glass-effect border border-white/20 rounded-3xl p-16 text-center max-w-5xl mx-auto pulse-glow">
+              <h2 className="text-5xl md:text-6xl font-black mb-8 gradient-text">
+                🚀 Ready to Dominate the Market?
               </h2>
-              <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-                Join 1000+ vendors already growing their street food business with Vendora's intelligent marketplace platform.
+              <p className="text-2xl md:text-3xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+                Join 5000+ vendors already building their empires with VENDORA's revolutionary platform 🎯
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-8 justify-center">
                 <Button 
                   onClick={() => navigate('/auth')} 
                   size="lg" 
-                  className="px-10 py-4 text-lg font-semibold rounded-2xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                  className="px-16 py-8 text-2xl font-black rounded-3xl animated-gradient text-white shadow-2xl hover:shadow-primary/25 transform hover:scale-110 transition-all duration-500 pulse-glow"
                 >
-                  Start Free Trial
+                  💥 Start Your Empire NOW
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="px-10 py-4 text-lg font-semibold rounded-2xl border-2 border-primary/30 hover:border-primary/50 backdrop-blur-sm bg-background/50 hover:bg-primary/5 transform hover:scale-105 transition-all duration-300"
+                  className="px-16 py-8 text-2xl font-black rounded-3xl border-3 border-white/30 glass-effect text-white hover:border-white/50 hover:bg-white/10 transform hover:scale-110 transition-all duration-500"
                 >
-                  Book Demo
+                  🎯 Book VIP Demo
                 </Button>
               </div>
             </div>

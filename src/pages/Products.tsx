@@ -326,28 +326,30 @@ const Products = ({ cart, setCart }: ProductsProps) => {
   const isSupplier = profile?.role === 'supplier';
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Products</h1>
-          <p className="text-muted-foreground">
-            {isSupplier ? 'Manage your product inventory' : 'Browse and order products'}
-          </p>
-        </div>
-        
-        {isSupplier && (
-          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Product
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle>Add New Product</DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleAddProduct} className="space-y-4">
+    <div className="space-y-8 animate-fade-in">
+      <div className="relative overflow-hidden rounded-3xl glass-effect p-8 border border-white/10 pulse-glow">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl floating"></div>
+        <div className="relative flex items-center justify-between">
+          <div>
+            <h1 className="text-5xl font-black gradient-text mb-4">🛍️ Products Marketplace</h1>
+            <p className="text-xl text-white/80 font-medium">
+              {isSupplier ? '🚀 Manage your premium inventory empire' : '🎯 Discover and order premium products'}
+            </p>
+          </div>
+          
+          {isSupplier && (
+            <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="animated-gradient px-8 py-4 text-lg font-bold rounded-2xl text-white shadow-xl hover:shadow-primary/25 transform hover:scale-110 transition-all duration-500">
+                  <Plus className="h-5 w-5 mr-2" />
+                  ✨ Add Product
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-md glass-effect border border-white/20">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold gradient-text">Add New Product</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleAddProduct} className="space-y-4">{/* ... keep existing form content ... */}
                 <div className="space-y-2">
                   <Label htmlFor="name">Product Name</Label>
                   <Input
@@ -420,7 +422,7 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                   />
                 </div>
                 
-                <Button type="submit" className="w-full">Add Product</Button>
+                <Button type="submit" className="w-full animated-gradient text-white font-bold py-3">✨ Add Product</Button>
               </form>
             </DialogContent>
           </Dialog>
@@ -429,9 +431,9 @@ const Products = ({ cart, setCart }: ProductsProps) => {
         {/* Edit Product Dialog */}
         {isSupplier && (
           <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-            <DialogContent className="max-w-md">
+            <DialogContent className="max-w-md glass-effect border border-white/20">
               <DialogHeader>
-                <DialogTitle>Edit Product</DialogTitle>
+                <DialogTitle className="text-2xl font-bold gradient-text">Edit Product</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleUpdateProduct} className="space-y-4">
                 <div className="space-y-2">
@@ -507,8 +509,8 @@ const Products = ({ cart, setCart }: ProductsProps) => {
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button type="submit" className="flex-1">Update Product</Button>
-                  <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                  <Button type="submit" className="flex-1 animated-gradient text-white font-bold">✨ Update Product</Button>
+                  <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)} className="glass-effect border-white/30 text-white hover:bg-white/10">
                     Cancel
                   </Button>
                 </div>
@@ -516,23 +518,25 @@ const Products = ({ cart, setCart }: ProductsProps) => {
             </DialogContent>
           </Dialog>
         )}
+        </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-4 items-center flex-wrap">
+      {/* Ultra Modern Filters */}
+      <div className="glass-effect rounded-2xl p-6 border border-white/10 pulse-glow">
+        <div className="flex gap-4 items-center flex-wrap">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-4 top-4 h-5 w-5 text-white/60" />
           <Input
-            placeholder="Search products..."
+            placeholder="🔍 Search products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className="pl-12 glass-effect border-white/20 text-white placeholder:text-white/60 text-lg py-3"
           />
         </div>
         
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="All categories" />
+          <SelectTrigger className="w-52 glass-effect border-white/20 text-white py-3">
+            <SelectValue placeholder="📂 All categories" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All categories</SelectItem>
@@ -545,8 +549,8 @@ const Products = ({ cart, setCart }: ProductsProps) => {
         </Select>
 
         <Select value={sortBy} onValueChange={setSortBy}>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Sort by price" />
+          <SelectTrigger className="w-52 glass-effect border-white/20 text-white py-3">
+            <SelectValue placeholder="📊 Sort by price" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="default">Default</SelectItem>
@@ -554,22 +558,23 @@ const Products = ({ cart, setCart }: ProductsProps) => {
             <SelectItem value="price-high">Price: High to Low</SelectItem>
           </SelectContent>
         </Select>
+        </div>
       </div>
 
-      {/* Products Grid */}
+      {/* Epic Products Grid */}
       {filteredProducts.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">No products found.</p>
+        <div className="text-center py-20 glass-effect rounded-3xl border border-white/10">
+          <p className="text-2xl text-white/80 font-medium">🔍 No products found. Try adjusting your filters!</p>
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => {
             const averageRating = product.reviews && product.reviews.length > 0
               ? product.reviews.reduce((sum, review) => sum + review.rating, 0) / product.reviews.length
               : 0;
 
             return (
-              <Card key={product.id} className="overflow-hidden card-minimal hover:scale-105 transition-all duration-300">
+              <Card key={product.id} className="overflow-hidden glass-effect border border-white/10 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 pulse-glow group">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
