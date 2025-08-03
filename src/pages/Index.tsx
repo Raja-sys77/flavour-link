@@ -134,7 +134,7 @@ const Index = () => {
               </div>
               <CardTitle className="text-lg font-semibold mb-2">Verified Network</CardTitle>
               <CardDescription className="text-sm leading-relaxed">
-                Connect with 500+ verified suppliers with quality ratings.
+                Connect with {stats.loading ? 'verified suppliers' : `${stats.supplierCount} verified suppliers`} with quality ratings.
               </CardDescription>
             </Card>
 
@@ -169,6 +169,7 @@ const Index = () => {
                 variant="outline" 
                 size="lg" 
                 className="px-8 py-3 text-base font-medium rounded-md border border-border hover:bg-muted/50 transition-all duration-200"
+                onClick={() => navigate('/contact')}
               >
                 Contact Sales
               </Button>
