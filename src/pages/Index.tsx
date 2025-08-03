@@ -1,4 +1,5 @@
 import { useAuth } from '@/hooks/useAuth';
+import { useStats } from '@/hooks/useStats';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import { ShoppingCart, Package, Users, TrendingUp } from 'lucide-react';
 
 const Index = () => {
   const { user, loading } = useAuth();
+  const stats = useStats();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,18 +68,24 @@ const Index = () => {
               </Button>
             </div>
 
-            {/* Simple Stats */}
+            {/* Real Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl font-bold text-foreground mb-2">1000+</div>
+                <div className="text-3xl font-bold text-foreground mb-2">
+                  {stats.loading ? '...' : stats.vendorCount}
+                </div>
                 <div className="text-sm text-muted-foreground">Active Vendors</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-foreground mb-2">500+</div>
+                <div className="text-3xl font-bold text-foreground mb-2">
+                  {stats.loading ? '...' : stats.supplierCount}
+                </div>
                 <div className="text-sm text-muted-foreground">Verified Suppliers</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-foreground mb-2">50K+</div>
+                <div className="text-3xl font-bold text-foreground mb-2">
+                  {stats.loading ? '...' : stats.completedOrdersCount}
+                </div>
                 <div className="text-sm text-muted-foreground">Orders Completed</div>
               </div>
             </div>
@@ -147,7 +155,7 @@ const Index = () => {
               Ready to Get Started?
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join hundreds of vendors already growing their business with Vendora's marketplace platform.
+              Join {stats.loading ? 'our growing community' : `${stats.vendorCount} vendors`} already growing their business with Vendora's marketplace platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 

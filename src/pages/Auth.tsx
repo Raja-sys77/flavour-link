@@ -124,7 +124,7 @@ const Auth = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold">Verified Suppliers</h3>
-                  <p className="text-sm text-muted-foreground">500+ certified suppliers with quality ratings</p>
+                  <p className="text-sm text-muted-foreground">Certified suppliers with quality ratings</p>
                 </div>
               </div>
 
@@ -134,7 +134,7 @@ const Auth = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold">Active Community</h3>
-                  <p className="text-sm text-muted-foreground">1000+ vendors already growing their business</p>
+                  <p className="text-sm text-muted-foreground">Vendors already growing their business</p>
                 </div>
               </div>
 
