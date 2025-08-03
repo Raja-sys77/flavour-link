@@ -7,7 +7,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import NotificationDropdown from '@/components/NotificationDropdown';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import { LogOut, Package, User, LayoutDashboard, ShoppingCart, ClipboardList } from 'lucide-react';
+import { LogOut, Package, User, LayoutDashboard, ShoppingCart, ClipboardList, BarChart3 } from 'lucide-react';
 
 interface LayoutProps {
   children: ReactNode;
@@ -89,6 +89,18 @@ const Layout = ({ children, cart }: LayoutProps) => {
             >
               <ClipboardList className="h-4 w-4" />
               <span className="text-sm">{t('nav.orders')}</span>
+            </Link>
+
+            <Link 
+              to="/analytics" 
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                location.pathname === '/analytics' 
+                  ? 'bg-primary text-primary-foreground' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              }`}
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span className="text-sm">Analytics</span>
             </Link>
             
             <Link 
