@@ -41,6 +41,132 @@ export type Database = {
         }
         Relationships: []
       }
+      credit_limits: {
+        Row: {
+          available_credit: number | null
+          credit_limit: number
+          id: string
+          last_updated: string
+          used_credit: number
+          vendor_id: string
+        }
+        Insert: {
+          available_credit?: number | null
+          credit_limit?: number
+          id?: string
+          last_updated?: string
+          used_credit?: number
+          vendor_id: string
+        }
+        Update: {
+          available_credit?: number | null
+          credit_limit?: number
+          id?: string
+          last_updated?: string
+          used_credit?: number
+          vendor_id?: string
+        }
+        Relationships: []
+      }
+      financial_transactions: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          description: string
+          id: string
+          reference_id: string | null
+          reference_type: string | null
+          transaction_date: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          description: string
+          id?: string
+          reference_id?: string | null
+          reference_type?: string | null
+          transaction_date?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          reference_id?: string | null
+          reference_type?: string | null
+          transaction_date?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      invoices: {
+        Row: {
+          created_at: string
+          discount_amount: number
+          due_date: string
+          id: string
+          invoice_number: string
+          issue_date: string
+          notes: string | null
+          order_id: string
+          payment_terms: string
+          shipping_cost: number
+          status: string
+          subtotal: number
+          supplier_id: string
+          tax_amount: number
+          total_amount: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          created_at?: string
+          discount_amount?: number
+          due_date: string
+          id?: string
+          invoice_number: string
+          issue_date?: string
+          notes?: string | null
+          order_id: string
+          payment_terms?: string
+          shipping_cost?: number
+          status?: string
+          subtotal?: number
+          supplier_id: string
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          created_at?: string
+          discount_amount?: number
+          due_date?: string
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          notes?: string | null
+          order_id?: string
+          payment_terms?: string
+          shipping_cost?: number
+          status?: string
+          subtotal?: number
+          supplier_id?: string
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           action_url: string | null
@@ -169,6 +295,81 @@ export type Database = {
             referencedColumns: ["user_id"]
           },
         ]
+      }
+      payment_methods: {
+        Row: {
+          account_details: Json
+          created_at: string
+          id: string
+          is_active: boolean
+          is_default: boolean
+          provider: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_details: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          provider: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_details?: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          provider?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          gateway_response: Json | null
+          id: string
+          invoice_id: string
+          payment_date: string | null
+          payment_method_id: string | null
+          status: string
+          transaction_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          gateway_response?: Json | null
+          id?: string
+          invoice_id: string
+          payment_date?: string | null
+          payment_method_id?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          gateway_response?: Json | null
+          id?: string
+          invoice_id?: string
+          payment_date?: string | null
+          payment_method_id?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       products: {
         Row: {
@@ -332,11 +533,42 @@ export type Database = {
           },
         ]
       }
+      tax_configurations: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          rate: number
+          tax_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          rate: number
+          tax_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          rate?: number
+          tax_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      generate_invoice_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       generate_tracking_number: {
         Args: Record<PropertyKey, never>
         Returns: string
