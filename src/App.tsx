@@ -13,6 +13,7 @@ import Contact from '@/pages/Contact';
 import NotFound from '@/pages/NotFound';
 import Index from '@/pages/Index';
 import Analytics from '@/pages/Analytics';
+import Billing from '@/pages/Billing';
 import Layout from '@/components/Layout';
 import { Cart } from '@/components/Cart';
 
@@ -124,6 +125,16 @@ const AppContent = () => {
           <ProtectedRoute>
             <Layout cart={cart}>
               <OrderDetails />
+            </Layout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/billing" 
+        element={
+          <ProtectedRoute>
+            <Layout cart={cart}>
+              <Billing />
             </Layout>
           </ProtectedRoute>
         } 
