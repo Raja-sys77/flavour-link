@@ -96,8 +96,7 @@ export const useAnalyticsData = () => {
       .from('orders')
       .select('created_at, total_price, status')
       .or(`vendor_id.eq.${user?.id},supplier_id.eq.${user?.id}`)
-      .gte('created_at', startDate.toISOString())
-      .eq('status', 'delivered');
+      .gte('created_at', startDate.toISOString());
 
     if (!orders) return;
 
@@ -144,7 +143,7 @@ export const useAnalyticsData = () => {
       .from('products')
       .select(`
         *,
-        order_items!inner(quantity, price_per_kg),
+        order_items(quantity, price_per_kg),
         reviews(rating)
       `)
       .eq('supplier_id', user?.id);
@@ -152,10 +151,12 @@ export const useAnalyticsData = () => {
     if (!products) return;
 
     const performance = products.map(product => {
-      const totalSold = product.order_items.reduce((sum: number, item: any) => sum + item.quantity, 0);
-      const revenue = product.order_items.reduce((sum: number, item: any) => sum + (item.quantity * item.price_per_kg), 0);
-      const avgRating = product.reviews.length > 0 
-        ? product.reviews.reduce((sum: number, review: any) => sum + review.rating, 0) / product.reviews.length 
+      const orderItems = product.order_items || [];
+      const reviews = product.reviews || [];
+      const totalSold = orderItems.reduce((sum: number, item: any) => sum + item.quantity, 0);
+      const revenue = orderItems.reduce((sum: number, item: any) => sum + (item.quantity * item.price_per_kg), 0);
+      const avgRating = reviews.length > 0 
+        ? reviews.reduce((sum: number, review: any) => sum + review.rating, 0) / reviews.length 
         : 0;
       
       return {
