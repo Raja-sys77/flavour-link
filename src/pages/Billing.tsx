@@ -103,11 +103,7 @@ export default function Billing() {
     try {
       const { data, error } = await supabase
         .from('invoices')
-        .select(`
-          *,
-          vendor_profile:profiles!invoices_vendor_id_fkey(*),
-          supplier_profile:profiles!invoices_supplier_id_fkey(*)
-        `)
+        .select('*')
         .or(`vendor_id.eq.${user?.id},supplier_id.eq.${user?.id}`)
         .order('created_at', { ascending: false });
 
