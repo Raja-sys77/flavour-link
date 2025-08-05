@@ -41,6 +41,254 @@ export type Database = {
         }
         Relationships: []
       }
+      announcement_reads: {
+        Row: {
+          announcement_id: string
+          id: string
+          read_at: string
+          user_id: string
+        }
+        Insert: {
+          announcement_id: string
+          id?: string
+          read_at?: string
+          user_id: string
+        }
+        Update: {
+          announcement_id?: string
+          id?: string
+          read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "announcement_reads_announcement_id_fkey"
+            columns: ["announcement_id"]
+            isOneToOne: false
+            referencedRelation: "announcements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      announcements: {
+        Row: {
+          announcement_type: string
+          content: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          priority: string
+          published_at: string | null
+          published_by: string
+          read_count: number | null
+          target_audience: Json
+          title: string
+        }
+        Insert: {
+          announcement_type?: string
+          content: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          priority?: string
+          published_at?: string | null
+          published_by: string
+          read_count?: number | null
+          target_audience?: Json
+          title: string
+        }
+        Update: {
+          announcement_type?: string
+          content?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          priority?: string
+          published_at?: string | null
+          published_by?: string
+          read_count?: number | null
+          target_audience?: Json
+          title?: string
+        }
+        Relationships: []
+      }
+      business_profiles: {
+        Row: {
+          business_hours: Json | null
+          business_type: string
+          certifications: string[] | null
+          company_name: string
+          company_size: string | null
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          founded_year: number | null
+          id: string
+          industry: string
+          languages: string[] | null
+          logo_url: string | null
+          service_areas: string[] | null
+          social_links: Json | null
+          specializations: string[] | null
+          updated_at: string
+          user_id: string
+          verification_documents: Json | null
+          verification_status: string
+          website: string | null
+        }
+        Insert: {
+          business_hours?: Json | null
+          business_type: string
+          certifications?: string[] | null
+          company_name: string
+          company_size?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          founded_year?: number | null
+          id?: string
+          industry: string
+          languages?: string[] | null
+          logo_url?: string | null
+          service_areas?: string[] | null
+          social_links?: Json | null
+          specializations?: string[] | null
+          updated_at?: string
+          user_id: string
+          verification_documents?: Json | null
+          verification_status?: string
+          website?: string | null
+        }
+        Update: {
+          business_hours?: Json | null
+          business_type?: string
+          certifications?: string[] | null
+          company_name?: string
+          company_size?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          founded_year?: number | null
+          id?: string
+          industry?: string
+          languages?: string[] | null
+          logo_url?: string | null
+          service_areas?: string[] | null
+          social_links?: Json | null
+          specializations?: string[] | null
+          updated_at?: string
+          user_id?: string
+          verification_documents?: Json | null
+          verification_status?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      business_relationships: {
+        Row: {
+          created_at: string
+          established_date: string | null
+          id: string
+          last_interaction: string | null
+          notes: string | null
+          overall_score: number | null
+          quality_score: number | null
+          relationship_type: string
+          status: string
+          supplier_id: string
+          trust_score: number | null
+          updated_at: string
+          vendor_id: string
+          volume_score: number | null
+        }
+        Insert: {
+          created_at?: string
+          established_date?: string | null
+          id?: string
+          last_interaction?: string | null
+          notes?: string | null
+          overall_score?: number | null
+          quality_score?: number | null
+          relationship_type?: string
+          status?: string
+          supplier_id: string
+          trust_score?: number | null
+          updated_at?: string
+          vendor_id: string
+          volume_score?: number | null
+        }
+        Update: {
+          created_at?: string
+          established_date?: string | null
+          id?: string
+          last_interaction?: string | null
+          notes?: string | null
+          overall_score?: number | null
+          quality_score?: number | null
+          relationship_type?: string
+          status?: string
+          supplier_id?: string
+          trust_score?: number | null
+          updated_at?: string
+          vendor_id?: string
+          volume_score?: number | null
+        }
+        Relationships: []
+      }
+      communication_preferences: {
+        Row: {
+          announcement_notifications: boolean | null
+          created_at: string
+          email_notifications: boolean | null
+          id: string
+          marketing_emails: boolean | null
+          message_notifications: boolean | null
+          newsletter_subscription: boolean | null
+          notification_schedule: Json | null
+          order_updates: boolean | null
+          preferred_language: string | null
+          push_notifications: boolean | null
+          sms_notifications: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          announcement_notifications?: boolean | null
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+          marketing_emails?: boolean | null
+          message_notifications?: boolean | null
+          newsletter_subscription?: boolean | null
+          notification_schedule?: Json | null
+          order_updates?: boolean | null
+          preferred_language?: string | null
+          push_notifications?: boolean | null
+          sms_notifications?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          announcement_notifications?: boolean | null
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+          marketing_emails?: boolean | null
+          message_notifications?: boolean | null
+          newsletter_subscription?: boolean | null
+          notification_schedule?: Json | null
+          order_updates?: boolean | null
+          preferred_language?: string | null
+          push_notifications?: boolean | null
+          sms_notifications?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       credit_limits: {
         Row: {
           available_credit: number | null
@@ -166,6 +414,123 @@ export type Database = {
           vendor_id?: string
         }
         Relationships: []
+      }
+      message_templates: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          title: string
+          usage_count: number | null
+          user_id: string
+          variables: Json | null
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string
+          id?: string
+          title: string
+          usage_count?: number | null
+          user_id: string
+          variables?: Json | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+          usage_count?: number | null
+          user_id?: string
+          variables?: Json | null
+        }
+        Relationships: []
+      }
+      message_threads: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          metadata: Json | null
+          title: string | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          metadata?: Json | null
+          title?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          metadata?: Json | null
+          title?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          attachments: Json | null
+          content: string | null
+          created_at: string
+          edited_at: string | null
+          id: string
+          message_type: string
+          metadata: Json | null
+          reply_to: string | null
+          sender_id: string
+          thread_id: string
+        }
+        Insert: {
+          attachments?: Json | null
+          content?: string | null
+          created_at?: string
+          edited_at?: string | null
+          id?: string
+          message_type?: string
+          metadata?: Json | null
+          reply_to?: string | null
+          sender_id: string
+          thread_id: string
+        }
+        Update: {
+          attachments?: Json | null
+          content?: string | null
+          created_at?: string
+          edited_at?: string | null
+          id?: string
+          message_type?: string
+          metadata?: Json | null
+          reply_to?: string | null
+          sender_id?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_reply_to_fkey"
+            columns: ["reply_to"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "message_threads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -454,6 +819,50 @@ export type Database = {
         }
         Relationships: []
       }
+      relationship_evaluations: {
+        Row: {
+          comments: string | null
+          created_at: string
+          evaluation_period_end: string | null
+          evaluation_period_start: string | null
+          evaluation_type: string
+          evaluator_id: string
+          id: string
+          relationship_id: string
+          score: number
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          evaluation_period_end?: string | null
+          evaluation_period_start?: string | null
+          evaluation_type: string
+          evaluator_id: string
+          id?: string
+          relationship_id: string
+          score: number
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          evaluation_period_end?: string | null
+          evaluation_period_start?: string | null
+          evaluation_type?: string
+          evaluator_id?: string
+          id?: string
+          relationship_id?: string
+          score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "relationship_evaluations_relationship_id_fkey"
+            columns: ["relationship_id"]
+            isOneToOne: false
+            referencedRelation: "business_relationships"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           comment: string | null
@@ -557,6 +966,218 @@ export type Database = {
           rate?: number
           tax_type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      thread_participants: {
+        Row: {
+          id: string
+          joined_at: string
+          last_read_at: string | null
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          last_read_at?: string | null
+          role?: string
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          last_read_at?: string | null
+          role?: string
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "thread_participants_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "message_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_documents: {
+        Row: {
+          created_at: string
+          description: string | null
+          file_path: string
+          file_size: number
+          file_type: string
+          id: string
+          name: string
+          tags: string[] | null
+          updated_at: string
+          uploaded_by: string
+          version: number
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          file_path: string
+          file_size: number
+          file_type: string
+          id?: string
+          name: string
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by: string
+          version?: number
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          file_path?: string
+          file_size?: number
+          file_type?: string
+          id?: string
+          name?: string
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by?: string
+          version?: number
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_documents_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_members: {
+        Row: {
+          id: string
+          joined_at: string
+          permissions: Json | null
+          role: string
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          permissions?: Json | null
+          role?: string
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          permissions?: Json | null
+          role?: string
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_tasks: {
+        Row: {
+          assigned_by: string
+          assigned_to: string | null
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          priority: string
+          status: string
+          title: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          assigned_by: string
+          assigned_to?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string
+          status?: string
+          title: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          assigned_by?: string
+          assigned_to?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_tasks_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          name: string
+          status: string
+          updated_at: string
+          workspace_type: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          name: string
+          status?: string
+          updated_at?: string
+          workspace_type?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          name?: string
+          status?: string
+          updated_at?: string
+          workspace_type?: string
         }
         Relationships: []
       }
