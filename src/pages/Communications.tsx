@@ -24,20 +24,8 @@ interface MessageThread {
   created_at: string;
   updated_at: string;
   metadata: any;
-  participants: Array<{
-    user_id: string;
-    role: string;
-    last_read_at: string;
-    profile?: {
-      full_name: string;
-      role: string;
-    };
-  }>;
-  last_message?: {
-    content: string;
-    created_at: string;
-    sender_id: string;
-  };
+  participants: any[];
+  last_message?: any;
   unread_count?: number;
 }
 
@@ -49,6 +37,7 @@ interface Workspace {
   status: string;
   created_by: string;
   created_at: string;
+  updated_at: string;
   member_count?: number;
   task_count?: number;
 }
@@ -81,7 +70,7 @@ const Communications: React.FC = () => {
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
-      setMessageThreads(data || []);
+      setMessageThreads((data as any) || []);
     } catch (error) {
       console.error('Error fetching message threads:', error);
       toast({
@@ -147,7 +136,7 @@ const Communications: React.FC = () => {
   const getThreadDisplayName = (thread: MessageThread) => {
     if (thread.title) return thread.title;
     
-    const otherParticipants = thread.participants.filter(p => p.user_id !== user?.id);
+    const otherParticipants = (thread.participants || []).filter((p: any) => p.user_id !== user?.id);
     if (otherParticipants.length === 1) {
       return otherParticipants[0].profile?.full_name || 'Unknown User';
     }

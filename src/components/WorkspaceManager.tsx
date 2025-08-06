@@ -139,7 +139,7 @@ const WorkspaceManager: React.FC<WorkspaceManagerProps> = ({ workspaceId, onBack
         .order('created_at', { ascending: false });
 
       if (tasksError) throw tasksError;
-      setTasks(tasksData || []);
+      setTasks((tasksData as any) || []);
 
       // Fetch documents
       const { data: documentsData, error: documentsError } = await supabase
@@ -152,19 +152,19 @@ const WorkspaceManager: React.FC<WorkspaceManagerProps> = ({ workspaceId, onBack
         .order('created_at', { ascending: false });
 
       if (documentsError) throw documentsError;
-      setDocuments(documentsData || []);
+      setDocuments((documentsData as any) || []);
 
       // Fetch members
       const { data: membersData, error: membersError } = await supabase
         .from('workspace_members')
         .select(`
           *,
-          profile:profiles!workspace_members_user_id_fkey(full_name, role, location)
+          profile:profiles(full_name, role, location)
         `)
         .eq('workspace_id', workspaceId);
 
       if (membersError) throw membersError;
-      setMembers(membersData || []);
+      setMembers((membersData as any) || []);
 
     } catch (error) {
       console.error('Error fetching workspace data:', error);

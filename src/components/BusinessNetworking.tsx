@@ -27,7 +27,8 @@ import {
   Plus,
   ExternalLink,
   Phone,
-  Mail
+  Mail,
+  Clock
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -53,7 +54,7 @@ interface BusinessProfile {
   business_hours: any;
   social_links: any;
   verification_status: string;
-  verification_documents: any[];
+  verification_documents: any;
   created_at: string;
   updated_at: string;
   user?: {
@@ -140,7 +141,7 @@ const BusinessNetworking: React.FC = () => {
         relationship: relationshipMap.get(profile.user_id)
       }));
 
-      setProfiles(profilesWithRelationships);
+      setProfiles(profilesWithRelationships as any);
     } catch (error) {
       console.error('Error fetching business profiles:', error);
       toast({
@@ -166,7 +167,7 @@ const BusinessNetworking: React.FC = () => {
         .order('last_interaction', { ascending: false });
 
       if (error) throw error;
-      setRelationships(data || []);
+      setRelationships((data as any) || []);
     } catch (error) {
       console.error('Error fetching relationships:', error);
     }

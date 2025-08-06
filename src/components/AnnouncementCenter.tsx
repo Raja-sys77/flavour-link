@@ -82,7 +82,7 @@ const AnnouncementCenter: React.FC = () => {
         .from('announcements')
         .select(`
           *,
-          publisher:profiles!announcements_published_by_fkey(full_name, role)
+          publisher:profiles(full_name, role)
         `)
         .order('created_at', { ascending: false });
 
@@ -101,7 +101,7 @@ const AnnouncementCenter: React.FC = () => {
         is_read: readAnnouncementIds.has(announcement.id)
       }));
 
-      setAnnouncements(announcementsWithReadStatus);
+      setAnnouncements(announcementsWithReadStatus as any);
     } catch (error) {
       console.error('Error fetching announcements:', error);
       toast({
@@ -175,11 +175,14 @@ const AnnouncementCenter: React.FC = () => {
         )
       );
 
-      // Update read count
-      await supabase
-        .from('announcements')
-        .update({ read_count: supabase.sql`read_count + 1` })
-        .eq('id', announcementId);
+      // Update read count (find the announcement and increment manually)
+      const announcement = announcements.find(a => a.id === announcementId);
+      if (announcement) {
+        await supabase
+          .from('announcements')
+          .update({ read_count: (announcement.read_count || 0) + 1 })
+          .eq('id', announcementId);
+      }
 
     } catch (error) {
       console.error('Error marking announcement as read:', error);

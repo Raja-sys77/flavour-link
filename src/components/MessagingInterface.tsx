@@ -21,7 +21,7 @@ interface Message {
   content: string;
   message_type: string;
   reply_to?: string;
-  attachments: any[];
+  attachments: any;
   metadata: any;
   edited_at?: string;
   created_at: string;
@@ -36,7 +36,8 @@ interface MessageTemplate {
   title: string;
   content: string;
   category: string;
-  variables: string[];
+  variables: any;
+  usage_count?: number;
 }
 
 interface MessagingInterfaceProps {
@@ -102,13 +103,13 @@ const MessagingInterface: React.FC<MessagingInterfaceProps> = ({ threadId, onBac
         .from('messages')
         .select(`
           *,
-          sender:profiles!messages_sender_id_fkey(full_name, role)
+          sender:profiles(full_name, role)
         `)
         .eq('thread_id', threadId)
         .order('created_at', { ascending: true });
 
       if (error) throw error;
-      setMessages(data || []);
+      setMessages((data as any) || []);
     } catch (error) {
       console.error('Error fetching messages:', error);
       toast({
@@ -130,7 +131,7 @@ const MessagingInterface: React.FC<MessagingInterfaceProps> = ({ threadId, onBac
         .order('usage_count', { ascending: false });
 
       if (error) throw error;
-      setMessageTemplates(data || []);
+      setMessageTemplates((data as any) || []);
     } catch (error) {
       console.error('Error fetching templates:', error);
     }
@@ -207,7 +208,7 @@ const MessagingInterface: React.FC<MessagingInterfaceProps> = ({ threadId, onBac
     try {
       await supabase
         .from('message_templates')
-        .update({ usage_count: template.usage_count + 1 })
+        .update({ usage_count: (template.usage_count || 0) + 1 })
         .eq('id', template.id);
     } catch (error) {
       console.error('Error updating template usage:', error);
