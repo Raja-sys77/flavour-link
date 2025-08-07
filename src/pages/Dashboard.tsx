@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+import AIChatbot from '@/components/ai/AIChatbot';
+import MobileControls from '@/components/mobile/MobileControls';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Package, ShoppingCart, TrendingUp, Users } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Profile {
   id: string;
@@ -285,6 +287,12 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       )}
+
+      {/* AI Assistant and Mobile Controls */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <AIChatbot />
+        <MobileControls />
+      </div>
     </div>
   );
 };

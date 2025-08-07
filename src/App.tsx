@@ -16,6 +16,8 @@ import Analytics from '@/pages/Analytics';
 import Billing from '@/pages/Billing';
 import Layout from '@/components/Layout';
 import { Cart } from '@/components/Cart';
+import PWAPrompts from '@/components/PWAPrompts';
+import OfflinePage from '@/pages/OfflinePage';
 
 interface CartItem {
   id: string;
@@ -60,6 +62,7 @@ const AppContent = () => {
   
   return (
     <Routes>
+      <Route path="/offline" element={<OfflinePage />} />
       <Route path="/" element={<Index />} />
       <Route 
         path="/auth" 
@@ -169,6 +172,7 @@ const App = () => {
         <Router>
           <AppContent />
           <Toaster />
+          <PWAPrompts />
         </Router>
       </TranslationProvider>
     </AuthProvider>
