@@ -5,6 +5,10 @@ import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShoppingCart, Package, Users, TrendingUp } from 'lucide-react';
+import heroImage from '@/assets/hero-image.jpg';
+import smartOrderingImage from '@/assets/smart-ordering.jpg';
+import inventoryControlImage from '@/assets/inventory-control.jpg';
+import verifiedNetworkImage from '@/assets/verified-network.jpg';
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -28,8 +32,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Clean Hero Section */}
-      <div className="relative min-h-screen flex items-center">
-        <div className="container mx-auto px-4 py-24 text-center">
+      <div className="relative min-h-screen flex items-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="container mx-auto px-4 py-24 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             {/* Simple Badge */}
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
@@ -109,8 +117,8 @@ const Index = () => {
           {/* Clean Features Grid */}
           <div id="features" className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
             <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
-                <ShoppingCart className="h-6 w-6 text-primary" />
+              <div className="w-16 h-16 mx-auto mb-4 rounded-lg overflow-hidden">
+                <img src={smartOrderingImage} alt="Smart Ordering" className="w-full h-full object-cover" />
               </div>
               <CardTitle className="text-lg font-semibold mb-2">Smart Ordering</CardTitle>
               <CardDescription className="text-sm leading-relaxed">
@@ -119,8 +127,8 @@ const Index = () => {
             </Card>
 
             <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Package className="h-6 w-6 text-primary" />
+              <div className="w-16 h-16 mx-auto mb-4 rounded-lg overflow-hidden">
+                <img src={inventoryControlImage} alt="Inventory Control" className="w-full h-full object-cover" />
               </div>
               <CardTitle className="text-lg font-semibold mb-2">Inventory Control</CardTitle>
               <CardDescription className="text-sm leading-relaxed">
@@ -129,8 +137,8 @@ const Index = () => {
             </Card>
 
             <Card className="p-6 text-center border border-border hover:shadow-md transition-shadow duration-200">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Users className="h-6 w-6 text-primary" />
+              <div className="w-16 h-16 mx-auto mb-4 rounded-lg overflow-hidden">
+                <img src={verifiedNetworkImage} alt="Verified Network" className="w-full h-full object-cover" />
               </div>
               <CardTitle className="text-lg font-semibold mb-2">Verified Network</CardTitle>
               <CardDescription className="text-sm leading-relaxed">
@@ -177,6 +185,51 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-border bg-muted/20">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-foreground">Vendora</h3>
+              <p className="text-sm text-muted-foreground">
+                India's leading B2B marketplace for street food vendors and suppliers.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold mb-3 text-foreground">Product</h4>
+              <div className="space-y-2">
+                <a href="#features" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
+                <a onClick={() => navigate('/auth')} className="block text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Get Started</a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold mb-3 text-foreground">Company</h4>
+              <div className="space-y-2">
+                <a onClick={() => navigate('/contact')} className="block text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Contact</a>
+                <a onClick={() => navigate('/privacy')} className="block text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Privacy Policy</a>
+                <a onClick={() => navigate('/terms')} className="block text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Terms of Service</a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-semibold mb-3 text-foreground">Support</h4>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">support@vendora.com</p>
+                <p className="text-sm text-muted-foreground">+91 98765 43210</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-border pt-8 mt-8 text-center">
+            <p className="text-sm text-muted-foreground">
+              © 2024 Vendora. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -18,6 +18,8 @@ import Layout from '@/components/Layout';
 import { Cart } from '@/components/Cart';
 import PWAPrompts from '@/components/PWAPrompts';
 import OfflinePage from '@/pages/OfflinePage';
+import Privacy from '@/pages/Privacy';
+import Terms from '@/pages/Terms';
 
 interface CartItem {
   id: string;
@@ -153,6 +155,8 @@ const AppContent = () => {
         } 
       />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/track/:trackingNumber" element={
         <Suspense fallback={<div>Loading...</div>}>
           <TrackingPage />
