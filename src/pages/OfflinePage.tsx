@@ -7,7 +7,7 @@ const OfflinePage: React.FC = () => {
   const handleRetry = () => {
     if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
       navigator.serviceWorker.ready.then(registration => {
-        registration.sync.register('background-sync-retry');
+        (registration as any).sync.register('background-sync-retry');
       });
     }
     window.location.reload();

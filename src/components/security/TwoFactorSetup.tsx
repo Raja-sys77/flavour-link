@@ -119,10 +119,10 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ className }) => {
   const disable2FA = async () => {
     setIsLoading(true);
     try {
-      // Disable 2FA in user profile
+      // Disable 2FA in user profile (cast to any to handle type mismatch)
       const { error } = await supabase
         .from('profiles')
-        .update({ two_factor_enabled: false })
+        .update({ two_factor_enabled: false } as any)
         .eq('user_id', user?.id);
 
       if (error) throw error;

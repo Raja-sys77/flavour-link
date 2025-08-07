@@ -139,8 +139,8 @@ export class PWAManager {
   private async syncWhenOnline(): Promise<void> {
     if (this.registration && 'sync' in this.registration) {
       try {
-        await this.registration.sync.register('background-sync-orders');
-        await this.registration.sync.register('background-sync-products');
+        await (this.registration as any).sync.register('background-sync-orders');
+        await (this.registration as any).sync.register('background-sync-products');
         console.log('Background sync registered');
       } catch (error) {
         console.error('Background sync registration failed:', error);
@@ -176,9 +176,10 @@ export class PWAManager {
       await this.registration.showNotification(title, {
         icon: '/icon-192.png',
         badge: '/icon-192.png',
-        vibrate: [200, 100, 200],
-        ...options
-      });
+        ...(options as any),
+        // vibrate is not standard in NotificationOptions but works in browsers
+        vibrate: [200, 100, 200]
+      } as any);
     }
   }
 

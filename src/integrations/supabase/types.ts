@@ -785,35 +785,50 @@ export type Database = {
       }
       profiles: {
         Row: {
+          account_locked_until: string | null
           created_at: string
+          failed_login_attempts: number | null
           full_name: string
           id: string
           language_preference: string | null
+          last_login_at: string | null
           location: string
+          password_changed_at: string | null
           phone: string
           role: Database["public"]["Enums"]["user_role"]
+          two_factor_enabled: boolean | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          account_locked_until?: string | null
           created_at?: string
+          failed_login_attempts?: number | null
           full_name: string
           id?: string
           language_preference?: string | null
+          last_login_at?: string | null
           location: string
+          password_changed_at?: string | null
           phone: string
           role: Database["public"]["Enums"]["user_role"]
+          two_factor_enabled?: boolean | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          account_locked_until?: string | null
           created_at?: string
+          failed_login_attempts?: number | null
           full_name?: string
           id?: string
           language_preference?: string | null
+          last_login_at?: string | null
           location?: string
+          password_changed_at?: string | null
           phone?: string
           role?: Database["public"]["Enums"]["user_role"]
+          two_factor_enabled?: boolean | null
           updated_at?: string
           user_id?: string
         }
@@ -900,6 +915,75 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      security_logs: {
+        Row: {
+          created_at: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          location_data: Json | null
+          risk_score: number | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          location_data?: Json | null
+          risk_score?: number | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          location_data?: Json | null
+          risk_score?: number | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      session_tokens: {
+        Row: {
+          created_at: string
+          device_info: Json | null
+          expires_at: string
+          id: string
+          is_active: boolean
+          last_used_at: string | null
+          token_hash: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_info?: Json | null
+          expires_at: string
+          id?: string
+          is_active?: boolean
+          last_used_at?: string | null
+          token_hash: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_info?: Json | null
+          expires_at?: string
+          id?: string
+          is_active?: boolean
+          last_used_at?: string | null
+          token_hash?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       shipments: {
         Row: {
@@ -1003,6 +1087,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      two_factor_auth: {
+        Row: {
+          attempts: number
+          created_at: string
+          email: string | null
+          expires_at: string
+          id: string
+          otp_code: string
+          phone_number: string | null
+          updated_at: string
+          user_id: string
+          verified: boolean
+          verified_at: string | null
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          email?: string | null
+          expires_at: string
+          id?: string
+          otp_code: string
+          phone_number?: string | null
+          updated_at?: string
+          user_id: string
+          verified?: boolean
+          verified_at?: string | null
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          email?: string | null
+          expires_at?: string
+          id?: string
+          otp_code?: string
+          phone_number?: string | null
+          updated_at?: string
+          user_id?: string
+          verified?: boolean
+          verified_at?: string | null
+        }
+        Relationships: []
       }
       workspace_documents: {
         Row: {
@@ -1186,6 +1312,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_expired_otps: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       generate_invoice_number: {
         Args: Record<PropertyKey, never>
         Returns: string
